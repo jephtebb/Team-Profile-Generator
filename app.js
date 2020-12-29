@@ -32,6 +32,7 @@ const members = () => {
     ]).then(response => {
         const managerProfile = new manager(response.managerName, response.managerIDnumber,response.managerEmail,response.managerofficeNumber);
         teamMemberArr.push(managerProfile);
+        addMember();
     
 
        })
@@ -62,11 +63,12 @@ const members = () => {
     ]).then(response => {
         const engineerProfile = new engineer(response.engineerName, response.engineerIDnumber,response.engineerEmail,response.githubUsername);
         teamMemberArr.push(engineerProfile);
+        addMember();
     
 
        })
     }
-    const inter = () =>{
+    const intern = () =>{
         inquirer.prompt([
             {
                 type: 'input',
@@ -92,8 +94,43 @@ const members = () => {
     ]).then(response => {
         const internProfile = new intern(response.internName, response.internIDnumber,response.internEmail,response.schoolAttended);
         teamMemberArr.push(internProfile);
+        addMember();
        
 
        })
     }
+    const addMember = () =>{
+        inquirer.prompt([
+            {
+                type: 'checkbox',
+                name:'chooseMember',
+                message: 'Which employee would you like to add: ',
+                choices: ['Manager','Engineer','Intern','Done']
+
+        }
+    ]).then(response =>{
+        const role = response.chooseMember;
+        switch (role){
+            case Manager:
+                manager();
+                break;
+            case Engineer:
+                engineer();
+                break;
+            case Intern:
+                intern();
+                break;
+            case Done:
+                teamReady();
+                break;
+
+        }
+    });
+
+    }
+    addMember();
 }
+const teamReady = () =>{
+    fs.writeFileSync('finish later')
+}
+
