@@ -8,7 +8,7 @@ const teamMemberArr = [];
 const members = () => {
     const manager = () =>{
         inquirer.prompt([
-            {
+         {
                 type: 'input',
                 name: 'managerName',
                 message: "What is the manager's name"
@@ -109,8 +109,8 @@ const members = () => {
 
         }
     ]).then(response =>{
-        const role = response.chooseMember;
-        switch (role){
+        const choice = response.chooseMember;
+        switch (choice){
             case Manager:
                 manager();
                 break;
@@ -133,4 +133,6 @@ const members = () => {
 const teamReady = () =>{
     fs.writeFileSync('finish later')
 }
+
+members();
 
