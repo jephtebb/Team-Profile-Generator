@@ -32,7 +32,7 @@ const members = () => {
     ]).then(response => {
         const managerProfile = new manager(response.managerName, response.managerIDnumber,response.managerEmail,response.managerofficeNumber);
         teamMemberArr.push(managerProfile);
-        addMember();
+    
 
        })
     }
@@ -62,7 +62,7 @@ const members = () => {
     ]).then(response => {
         const engineerProfile = new engineer(response.engineerName, response.engineerIDnumber,response.engineerEmail,response.githubUsername);
         teamMemberArr.push(engineerProfile);
-        addMember();
+    
 
        })
     }
@@ -92,7 +92,7 @@ const members = () => {
     ]).then(response => {
         const internProfile = new intern(response.internName, response.internIDnumber,response.internEmail,response.schoolAttended);
         teamMemberArr.push(internProfile);
-        addMember();
+       
 
        })
     }
