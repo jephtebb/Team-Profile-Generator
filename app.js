@@ -1,12 +1,22 @@
 const fs = require ('fs');
 const inquirer = require('inquirer');
 const manager  = require('./lib/manager');
-const inter = require('./lib/inter');
+const intern = require('./lib/intern');
 const engineer = require('./lib/engineer');
+const path = require('path');
+const render = require("./lib/htmlpage");
+const OUTPUT_DIR = path.resolve(__dirname, "output");
+const outputPath = path.join(OUTPUT_DIR, "index.html");
+
+
+
+
+
+
 const teamMemberArr = [];
 
 const members = () => {
-    const manager = () =>{
+    const managerP = () =>{
         inquirer.prompt([
          {
                 type: 'input',
@@ -31,13 +41,14 @@ const members = () => {
 
     ]).then(response => {
         const managerProfile = new manager(response.managerName, response.managerIDnumber,response.managerEmail,response.managerofficeNumber);
+        console.log(response.managerName)
         teamMemberArr.push(managerProfile);
         addMember();
     
 
        })
     }
-    const engineer = () =>{
+    const engineerP = () =>{
         inquirer.prompt([
             {
                 type: 'input',
@@ -68,7 +79,7 @@ const members = () => {
 
        })
     }
-    const intern = () =>{
+    const internP = () =>{
         inquirer.prompt([
             {
                 type: 'input',
@@ -102,28 +113,26 @@ const members = () => {
     const addMember = () =>{
         inquirer.prompt([
             {
-                type: 'checkbox',
+                type: 'list',
                 name:'chooseMember',
-                message: 'Which employee would you like to add: ',
+                message: 'Which employee would you like to add or select "done" to build your team: ',
                 choices: ['Manager','Engineer','Intern','Done']
 
         }
     ]).then(response =>{
         const choice = response.chooseMember;
-        switch (choice){
-            case Manager:
-                manager();
-                break;
-            case Engineer:
-                engineer();
-                break;
-            case Intern:
-                intern();
-                break;
-            case Done:
-                teamReady();
-                break;
-
+        console.log(choice)
+        if (choice === "Manager"){
+            managerP();
+        }
+        else if (choice === "Engineer"){
+            engineerP();
+        }
+        else if (choice === "Intern"){
+            internP();
+        }
+        else {
+            teamReady();
         }
     });
 
@@ -131,7 +140,10 @@ const members = () => {
     addMember();
 }
 const teamReady = () =>{
-    fs.writeFileSync('finish later')
+    if (!fs.existsSync(OUTPUT_DIR)) {
+        console.log(fs.mkdirSync(OUTPUT_DIR))
+    }
+    fs.writeFileSync(outputPath, render(teamMemberArr), "utf-8");
 }
 
 members();
