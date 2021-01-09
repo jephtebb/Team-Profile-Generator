@@ -8,13 +8,7 @@ const render = require("./lib/htmlpage");
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "index.html");
 
-
-
-
-
-
 const teamMemberArr = [];
-
 const members = () => {
     const managerP = () =>{
         inquirer.prompt([
@@ -40,12 +34,10 @@ const members = () => {
         }
 
     ]).then(response => {
-        const managerProfile = new manager(response.managerName, response.managerIDnumber,response.managerEmail,response.managerofficeNumber);
+        const managerProfile = new manager(response.managerName, response.managerIDnumber,response.managerEmail,response.managerOfficeNumber);
         console.log(response.managerName)
         teamMemberArr.push(managerProfile);
         addMember();
-    
-
        })
     }
     const engineerP = () =>{
@@ -75,8 +67,6 @@ const members = () => {
         const engineerProfile = new engineer(response.engineerName, response.engineerIDnumber,response.engineerEmail,response.githubUsername);
         teamMemberArr.push(engineerProfile);
         addMember();
-    
-
        })
     }
     const internP = () =>{
@@ -106,8 +96,6 @@ const members = () => {
         const internProfile = new intern(response.internName, response.internIDnumber,response.internEmail,response.schoolAttended);
         teamMemberArr.push(internProfile);
         addMember();
-       
-
        })
     }
     const addMember = () =>{
@@ -117,7 +105,6 @@ const members = () => {
                 name:'chooseMember',
                 message: 'Which employee would you like to add or select "done" to build your team: ',
                 choices: ['Manager','Engineer','Intern','Done']
-
         }
     ]).then(response =>{
         const choice = response.chooseMember;
@@ -144,7 +131,7 @@ const teamReady = () =>{
         console.log(fs.mkdirSync(OUTPUT_DIR))
     }
     fs.writeFileSync(outputPath, render(teamMemberArr), "utf-8");
-}
+    }
 
 members();
 
