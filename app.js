@@ -10,118 +10,125 @@ const outputPath = path.join(OUTPUT_DIR, "index.html");
 
 const teamMemberArr = [];
 const members = () => {
-    const managerP = () =>{
+    const managerP = (employeeAnswer) =>{
         inquirer.prompt([
-         {
-                type: 'input',
-                name: 'managerName',
-                message: "What is the manager's name"
-        },
-        {
-                type: 'input',
-                name: 'managerIDnumber',
-                message: "What is the manager's ID number"
-        },
-        {
-                type: 'input',
-                name: 'managerEmail',
-                message: "What is the manager's email address"
-        },
         {
                 type: 'input',
                 name: 'managerOfficeNumber',
                 message: "What is the manager's office number"
+        },
+        {
+            type: "confirm",
+            message: "Okay, looks like we're all set for this one.  Would you like to add another?",
+            name: "answerAddAnother",
         }
 
     ]).then(response => {
-        const managerProfile = new manager(response.managerName, response.managerIDnumber,response.managerEmail,response.managerOfficeNumber);
-        console.log(response.managerName)
-        teamMemberArr.push(managerProfile);
-        addMember();
-       })
+    const managerProfile = new manager(employeeAnswer.employeeName, employeeAnswer.employeeID, employeeAnswer.employeeEmail, response.managerOfficeNumber);
+    teamMemberArr.push(managerProfile);
+    if (response.answerAddAnother === true) {
+
+        // This loops back to the original function to add another employee if the user so chooses
+        addMember()
+    } else {
+
+        // This begins the process of rendering the content if there is nobody else to add
+        teamReady();
+        console.log("rendered!")
     }
-    const engineerP = () =>{
+})
+
+
+    }
+    const engineerP = (employeeAnswer) =>{
         inquirer.prompt([
-            {
-                type: 'input',
-                name: 'engineerName',
-                message: "What is the engineer's name"
-        },
-        {
-                type: 'input',
-                name: 'engineerIDnumber',
-                message: "What is the engineer's ID number"
-        },
-        {
-                type: 'input',
-                name: 'engineerEmail',
-                message: "What is the engineer's email address"
-        },
         {
                 type: 'input',
                 name: 'githubUsername',
                 message: "What is the engineer's github username"
-        }
+        },
+        {
+            type: "confirm",
+            message: "Okay, looks like we're all set for this one.  Would you like to add another?",
+            name: "answerAddAnother",
+        },
 
     ]).then(response => {
-        const engineerProfile = new engineer(response.engineerName, response.engineerIDnumber,response.engineerEmail,response.githubUsername);
+        const engineerProfile = new engineer(employeeAnswer.employeeName, employeeAnswer.employeeID, employeeAnswer.employeeEmail, response.githubUsername);
         teamMemberArr.push(engineerProfile);
-        addMember();
-       })
+        if (response.answerAddAnother === true) {
+    
+            // This loops back to the original function to add another employee if the user so chooses
+            addMember()
+        } else {
+    
+            // This begins the process of rendering the content if there is nobody else to add
+            teamReady();
+            console.log("rendered!")
+        }
+    })
     }
-    const internP = () =>{
+    const internP = (employeeAnswer) =>{
         inquirer.prompt([
-            {
-                type: 'input',
-                name: 'internName',
-                message: "What is the intern's name"
-        },
-        {
-                type: 'input',
-                name: 'internIDnumber',
-                message: "What is the intern's ID number"
-        },
-        {
-                type: 'input',
-                name: 'internEmail',
-                message: "What is the intern's email address"
-        },
         {
                 type: 'input',
                 name: 'schoolAttended',
                 message: "Where does the intern go to school?"
-        }
+        },
+        {
+            type: "confirm",
+            message: "Okay, looks like we're all set for this one.  Would you like to add another?",
+            name: "answerAddAnother",
+        },
 
     ]).then(response => {
-        const internProfile = new intern(response.internName, response.internIDnumber,response.internEmail,response.schoolAttended);
+        const internProfile = new intern(employeeAnswer.employeeName, employeeAnswer.employeeID, employeeAnswer.employeeEmail, response.schoolAttended);
         teamMemberArr.push(internProfile);
-        addMember();
-       })
+        if (response.answerAddAnother === true) {
+    
+            // This loops back to the original function to add another employee if the user so chooses
+            addMember()
+        } else {
+    
+            // This begins the process of rendering the content if there is nobody else to add
+            teamReady();
+            console.log("rendered!")
+        }
+    })
     }
     const addMember = () =>{
         inquirer.prompt([
-            {
+        {
+            type: "input",
+            message: "Enter the name of the team member you would like to add: ",
+            name: "employeeName"
+        },
+        {
+            type: "input",
+            message: "Enter his or her ID number: ",
+            name: "employeeID"
+        },
+        {
+            type: "input",
+            message: "Great.  What is his or her e-mail address?",
+            name: "employeeEmail"
+        },
+        {
                 type: 'list',
                 name:'chooseMember',
-                message: 'Which employee would you like to add or select "done" to build your team: ',
-                choices: ['Manager','Engineer','Intern','Done']
+                message: 'Select the role of the employee or "Done" to build your team: ',
+                choices: ['Manager','Engineer','Intern']
         }
     ]).then(response =>{
-        const choice = response.chooseMember;
-        console.log(choice)
-        if (choice === "Manager"){
-            managerP();
-        }
-        else if (choice === "Engineer"){
-            engineerP();
-        }
-        else if (choice === "Intern"){
-            internP();
-        }
-        else {
-            teamReady();
-        }
-    });
+            // Determining the next line of questions to be answered, based off of which role the employee will have
+            if (response.chooseMember === "Engineer") {
+                engineerP(response);
+            } else if (response.chooseMember === "Intern") {
+                internP(response);
+            } else {
+                managerP(response);
+            }
+        })
 
     }
     addMember();
