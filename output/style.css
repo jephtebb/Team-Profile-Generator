@@ -1,0 +1,11 @@
+.container{
+    display:flex;
+    width: 60%;
+    margin: auto;
+}
+.team-header{
+    text-align: center;
+}
+.card-header{
+    background-color: lightskyblue;
+}
