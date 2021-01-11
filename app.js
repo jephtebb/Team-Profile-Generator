@@ -19,7 +19,7 @@ const members = () => {
         },
         {
             type: "confirm",
-            message: "Okay, looks like we're all set for this one.  Would you like to add another?",
+            message: "Would you like to add another team member?",
             name: "answerAddAnother",
         }
 
@@ -34,11 +34,9 @@ const members = () => {
 
         // This begins the process of rendering the content if there is nobody else to add
         teamReady();
-        console.log("rendered!")
+      
     }
 })
-
-
     }
     const engineerP = (employeeAnswer) =>{
         inquirer.prompt([
@@ -49,7 +47,7 @@ const members = () => {
         },
         {
             type: "confirm",
-            message: "Okay, looks like we're all set for this one.  Would you like to add another?",
+            message: "Would you like to add another team member?",
             name: "answerAddAnother",
         },
 
@@ -64,7 +62,7 @@ const members = () => {
     
             // This begins the process of rendering the content if there is nobody else to add
             teamReady();
-            console.log("rendered!")
+            
         }
     })
     }
@@ -77,7 +75,7 @@ const members = () => {
         },
         {
             type: "confirm",
-            message: "Okay, looks like we're all set for this one.  Would you like to add another?",
+            message: " Would you like to add another team member?",
             name: "answerAddAnother",
         },
 
@@ -92,7 +90,7 @@ const members = () => {
     
             // This begins the process of rendering the content if there is nobody else to add
             teamReady();
-            console.log("rendered!")
+           
         }
     })
     }
@@ -116,7 +114,7 @@ const members = () => {
         {
                 type: 'list',
                 name:'chooseMember',
-                message: 'Select the role of the employee or "Done" to build your team: ',
+                message: 'Select the role of the employee: ',
                 choices: ['Manager','Engineer','Intern']
         }
     ]).then(response =>{
